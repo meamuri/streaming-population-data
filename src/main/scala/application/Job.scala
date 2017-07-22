@@ -1,12 +1,12 @@
 package application
 
-import factories.StreamingFactory
+import factories.{Resources, StreamingFactory}
 
 object Job {
   def main(args: Array[String]) {
     val ssc = StreamingFactory.getStreamingContext
 
-    val lines = ssc.socketTextStream("localhost", 7777)
+    val lines = ssc.socketTextStream("localhost", Resources.getStreamPort)
 
   }
 }

@@ -25,4 +25,5 @@ object Resources {
   def getSparkMemoryConfig: String = config.getString("spark.master-config.memory")
 
   def getStreamPeriod: Int = config.getInt("streaming.period")
+  def getStreamPort: Int = config.getInt("streaming.port")
 }
