@@ -13,7 +13,7 @@ object Converter {
         val pos_second_quotes = tmp_line.indexOf('"', pos_first_quotes + 1)
         if (pos_comma > pos_first_quotes && pos_comma < pos_second_quotes)
         tmp_line = tmp_line.substring(0, pos_comma - 1) +
-        tmp_line.substring(pos_comma).replaceFirst(",", " ")
+        tmp_line.substring(pos_comma).replaceFirst(",", "")
         tmp_line = tmp_line.replaceFirst("\"", " ")
         tmp_line = tmp_line.replaceFirst("\"", " ")
         pos_first_quotes = tmp_line.indexOf('"')

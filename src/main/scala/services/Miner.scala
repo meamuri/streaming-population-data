@@ -11,9 +11,6 @@ object Miner {
     if (events.isEmpty)
       return Some(current.get)
 
-    if (current.isEmpty)
-      return Some(events.maxBy(_.year))
-
     val recently = events.maxBy(_.year)
     val res = current match {
       case Some(city) => if (city.year > recently.year) { city } else { recently }
