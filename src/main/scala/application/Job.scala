@@ -8,9 +8,9 @@ object Job {
 
     val lines = ssc.socketTextStream("localhost", Resources.getStreamPort)
 
-    val tmp = lines.map(line => line.split(",").map(elem => elem.trim))
+    val ds = lines.map(line => line.split(",").map(elem => elem.trim))
 
-    tmp.print()
+    ds.print()
 
     ssc.start()
     ssc.awaitTermination()
