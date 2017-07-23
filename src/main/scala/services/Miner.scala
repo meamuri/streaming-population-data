@@ -1,25 +1,20 @@
 package services
 
 import dao.City
-import org.apache.spark.streaming.dstream.DStream
+import org.apache.spark.rdd.RDD
 
 object Miner {
-  def update(events: Seq[City], current: Option[City]): Option[City] = {
-    if (events.isEmpty && current.isEmpty)
-      return None
-
-    if (events.isEmpty)
-      return Some(current.get)
-
-    val recently = events.maxBy(_.year)
-    val res = current match {
-      case Some(city) => if (city.year > recently.year) { city } else { recently }
-      case None => recently
-    }
-    Some(res)
+  def getPopulation(data: RDD[(String, Iterable[City])]): RDD[(String, Double)] = {
+    data
+      .map(pair => {
+        var value = 0.0
+        for (city <- pair._2)
+          value += city.population
+        (pair._1, value)
+      })
   }
 
-  def calculatePopulation(stream: DStream[String]): Unit = {
-
+  def getPopulation(events: Seq[Double], oldState: Option[Double]): Option[Double] = {
+    Some(events.sum + oldState.getOrElse(0.0))
   }
 }

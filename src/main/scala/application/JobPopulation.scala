@@ -2,10 +2,10 @@ package application
 
 import factories.{Resources, StreamingFactory}
 import services.Miner
-import utils.Converter
+import utils.{Converter, SparkUtils}
 
 
-object Job {
+object JobPopulation {
   def main(args: Array[String]) {
     val ssc = StreamingFactory.getStreamingContext
     ssc.checkpoint("tmp")
@@ -14,10 +14,16 @@ object Job {
     val ds = Converter.linesToCities(lines)
     val cities = ds.map(city => (city.name, city))
 
-    val selected_rows = cities.updateStateByKey(Miner.update)
+    val selected_rows = cities.updateStateByKey(SparkUtils.recentlyCities)
+    val countries = selected_rows.map(pair => (pair._2.country, pair._2.population))
 
-    selected_rows.print()
+    val finishedInfo = countries.updateStateByKey(Miner.getPopulation)
+//    val result = finishedInfo.transform(rdd => Miner.getPopulation(rdd))
+
+    finishedInfo.print()
+
     ssc.start()
     ssc.awaitTermination()
+
   }
 }
