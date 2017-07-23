@@ -1,14 +1,15 @@
 package application
 
 import factories.{Resources, StreamingFactory}
+import utils.Converter
+
 
 object Job {
   def main(args: Array[String]) {
     val ssc = StreamingFactory.getStreamingContext
 
     val lines = ssc.socketTextStream("localhost", Resources.getStreamPort)
-
-    val ds = lines.map(line => line.split(",").map(elem => elem.trim))
+    val ds = Converter.linesToCities(lines)
 
     ds.print()
 
