@@ -10,4 +10,8 @@ object Miner {
   def getCount(newValues: Seq[City], oldState: Option[Int]): Option[Int] = {
     Some(newValues.size + oldState.getOrElse(0))
   }
+
+  def getTop(newValues: Seq[City], oldState: Option[Iterable[City]]): Option[Iterable[City]] = {
+    Some((newValues ++ oldState.getOrElse(List())).toList.sortBy(_.population).reverse.take(5))
+  }
 }
