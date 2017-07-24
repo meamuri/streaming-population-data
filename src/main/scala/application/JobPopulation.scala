@@ -15,7 +15,8 @@ object JobPopulation {
     val cities = ds.map(city => (city.name, city))
 
     val selected_rows = cities.updateStateByKey(SparkUtils.recentlyCities)
-    val countries = selected_rows.map(pair => (pair._2.country, pair._2.population))
+    val countries = selected_rows
+      .map(pair => (pair._2.country, pair._2.population))
 
     val finishedInfo = countries.updateStateByKey(Miner.getPopulation)
 //    val result = finishedInfo.transform(rdd => Miner.getPopulation(rdd))

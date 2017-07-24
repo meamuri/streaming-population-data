@@ -5,6 +5,7 @@ import com.typesafe.config.ConfigFactory
 object Resources {
   private val config = ConfigFactory.load
 
+  def getLevel: Int = config.getInt("job.level")*config.getInt("job.multiplier")
   def getHost: String = config.getString("host")
   def getDbName: String = config.getString("db.name")
 

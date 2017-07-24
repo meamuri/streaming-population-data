@@ -3,15 +3,15 @@ package utils
 import dao.City
 
 object SparkUtils {
-  def recentlyCities(events: Seq[City], current: Option[City]): Option[City] = {
-    if (events.isEmpty && current.isEmpty)
+  def recentlyCities(newValues: Seq[City], oldState: Option[City]): Option[City] = {
+    if (newValues.isEmpty && oldState.isEmpty)
       return None
 
-    if (events.isEmpty)
-      return Some(current.get)
+    if (newValues.isEmpty)
+      return Some(oldState.get)
 
-    val recently = events.maxBy(_.year)
-    val res = current match {
+    val recently = newValues.maxBy(_.year)
+    val res = oldState match {
       case Some(city) => if (city.year > recently.year) { city } else { recently }
       case None => recently
     }
