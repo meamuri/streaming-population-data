@@ -1,7 +1,7 @@
 package application
 
-import factories.{Resources, StreamingFactory}
-import services.Miner
+import factories.{DatabaseFactory, Resources, StreamingFactory}
+import services.{Keeper, Miner}
 import utils.{Converter, SparkUtils}
 
 object JobMillionaires {
@@ -21,8 +21,9 @@ object JobMillionaires {
       .map(pair => (pair._2.country, pair._2))
 
     val finishedInfo = countries.updateStateByKey(Miner.getCount)
-    finishedInfo.print()
 
+    finishedInfo.foreachRDD(rdd =>
+      Keeper.saveMillionaires(rdd, DatabaseFactory.getMillionairesCollection))
 
     ssc.start()
     ssc.awaitTerminationOrTimeout(5*1000) // 5 sec
