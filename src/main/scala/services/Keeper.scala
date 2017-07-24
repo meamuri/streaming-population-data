@@ -7,8 +7,8 @@ import org.apache.hadoop.fs.shell.Count
 import org.apache.spark.rdd.RDD
 
 class Keeper(val db: MongoDB, val generalInfo: String) {
-  def saveMillionaires(data: RDD[(String, Count)]): Unit ={
-    val coll = db("millionaires")
+  def saveMillionaires(data: RDD[(String, Count)], collName: String): Unit ={
+    val coll = db(collName)
     coll.drop()
     data.collect()
       .foreach(x => coll.save(getDbObject(x._1, x._2, "millionaires_count")) )
