@@ -1,7 +1,7 @@
 package application
 
-import factories.{Resources, StreamingFactory}
-import services.Miner
+import factories.{DatabaseFactory, Resources, StreamingFactory}
+import services.{Keeper, Miner}
 import utils.{Converter, SparkUtils}
 
 
@@ -20,7 +20,8 @@ object JobPopulation {
 
     val finishedInfo = countries.updateStateByKey(Miner.getPopulation)
 
-    finishedInfo.print()
+    finishedInfo.foreachRDD(rdd =>
+      Keeper.savePopulation(rdd, DatabaseFactory.getPopulationCollection))
 
     ssc.start()
     ssc.awaitTerminationOrTimeout(5*1000) // 5 sec
