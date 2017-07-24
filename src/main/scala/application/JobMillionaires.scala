@@ -11,15 +11,15 @@ object JobMillionaires {
 
     val lines = ssc.socketTextStream(Resources.getHost, Resources.getStreamPort)
     val ds = Converter.linesToCities(lines)
-    val cities = ds.map(city => (city.name, city))
+    val cities = ds.filter(city => city.population > 1000000).map(city => (city.name, city))
 
     val selected_rows = cities.updateStateByKey(SparkUtils.recentlyCities)
     val countries = selected_rows.map(pair => (pair._2.country, pair._2))
 
-//    val finishedInfo = countries.updateStateByKey(Miner.getPopulation)
+    val finishedInfo = countries.updateStateByKey(Miner.getMillionMore)
     //    val result = finishedInfo.transform(rdd => Miner.getPopulation(rdd))
 
-//    finishedInfo.print()
+    finishedInfo.print()
 
     ssc.start()
     ssc.awaitTermination()

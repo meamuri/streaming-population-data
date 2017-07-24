@@ -14,7 +14,11 @@ object Miner {
       })
   }
 
-  def getPopulation(events: Seq[Double], oldState: Option[Double]): Option[Double] = {
-    Some(events.sum + oldState.getOrElse(0.0))
+  def getPopulation(newValues: Seq[Double], oldState: Option[Double]): Option[Double] = {
+    Some(newValues.sum + oldState.getOrElse(0.0))
+  }
+
+  def getMillionMore(newValues: Seq[City], oldState: Option[Int]): Option[Int] = {
+    Some(newValues.size + oldState.getOrElse(0))
   }
 }
