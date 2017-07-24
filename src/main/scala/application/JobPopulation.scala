@@ -19,7 +19,6 @@ object JobPopulation {
       .map(pair => (pair._2.country, pair._2.population))
 
     val finishedInfo = countries.updateStateByKey(Miner.getPopulation)
-//    val result = finishedInfo.transform(rdd => Miner.getPopulation(rdd))
 
     finishedInfo.print()
 

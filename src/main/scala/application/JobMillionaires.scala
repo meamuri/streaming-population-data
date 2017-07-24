@@ -16,13 +16,13 @@ object JobMillionaires {
       .map(city => (city.name, city))
 
     val selected_rows = cities.updateStateByKey(SparkUtils.recentlyCities)
+
     val countries = selected_rows
       .map(pair => (pair._2.country, pair._2))
 
     val finishedInfo = countries.updateStateByKey(Miner.getCount)
-    //    val result = finishedInfo.transform(rdd => Miner.getPopulation(rdd))
-
     finishedInfo.print()
+
 
     ssc.start()
     ssc.awaitTerminationOrTimeout(5*1000) // 5 sec

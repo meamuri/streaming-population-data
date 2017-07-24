@@ -20,7 +20,6 @@ object JobTop {
       .map(pair => (pair._2.country, pair._2))
 
     val finishedInfo = countries.updateStateByKey(Miner.getTop)
-    //    val result = finishedInfo.transform(rdd => Miner.getPopulation(rdd))
 
     finishedInfo.print()
 
