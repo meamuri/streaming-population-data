@@ -27,7 +27,4 @@ object SparkUtils {
 //    Some(res)
   }
 
-//  def toCountries(events: Seq[City], current: Option[Iterable[City]]): Option[Iterable[City]] = {
-//    Some(events ++ current.getOrElse(Iterable.empty))
-//  }
 }

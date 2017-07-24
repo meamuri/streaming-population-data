@@ -28,6 +28,12 @@ object Keeper {
       .foreach(country => coll.save(getDbObject(country._1, country._2, "top")) )
   }
 
+  def saveRatio(data: RDD[(String, Double)], coll: MongoCollection): Unit = {
+    coll.drop()
+    data.collect()
+      .foreach(x => coll.save(getDbObject(x._1, x._2, "ratio")) )
+  }
+
   private def getDbObject(country: String, info: Any, name: String): DBObject = {
     val builder = MongoDBObject.newBuilder
     builder += "country" -> country

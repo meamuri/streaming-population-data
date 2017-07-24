@@ -21,7 +21,6 @@ object JobTop {
 
     val finishedInfo = countries.updateStateByKey(Miner.getTop)
 
-    finishedInfo.print()
     finishedInfo.foreachRDD(rdd => Keeper.saveTop(rdd, DatabaseFactory.getTopCollection))
 
     ssc.start()
