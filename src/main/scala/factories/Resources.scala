@@ -5,11 +5,7 @@ import com.typesafe.config.ConfigFactory
 object Resources {
   private val config = ConfigFactory.load
 
-  def getYear: Int = config.getInt("year")
-  def getLevel: Int = config.getInt("job.level")
-  def getTop: Int = config.getInt("job.top")
-  def isRationMaleToFemale: Boolean = config.getBoolean("job.is-m-to-f-ratio")
-
+  def getHost: String = config.getString("host")
   def getDbName: String = config.getString("db.name")
 
   def getCollMillionaires: String = config.getString("db.collections.millionaires")
@@ -26,4 +22,5 @@ object Resources {
 
   def getStreamPeriod: Int = config.getInt("streaming.period")
   def getStreamPort: Int = config.getInt("streaming.port")
+  def getStreamCheckpointPath: String = config.getString("streaming.checkpoint-path")
 }
