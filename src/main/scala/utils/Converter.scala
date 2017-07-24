@@ -27,13 +27,13 @@ object Converter {
       val country = line(0).replaceAll("\\.", " ").replaceAll("\"", "")
       val city_name = line(4).replaceAll("\\.", " ").replaceAll("\"", "")
       val year = line(1).toInt
-      val population = line(9).toDouble
+      val population = line(9).toFloat // чтобы перевод был в Int, а не Long!
       val sex = PartOfPeople.strToChar(line(3))
       City(
         country = country,
         name = city_name,
         year = year,
-        population = population,
+        population = Math.round(population), // Округляем!
         sex = sex
       )
     })
